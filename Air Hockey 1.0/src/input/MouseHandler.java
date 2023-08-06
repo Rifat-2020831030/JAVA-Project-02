@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import main.Collision;
 import main.gamePanel;
 
 public class MouseHandler implements MouseListener, MouseMotionListener {
@@ -21,16 +22,14 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
 		
 		if(dragged == true && pressed == true)
 		{
-			System.out.println("invoked at :"+ e.getX()+" "+e.getY());
-			if(e.getX()<400)
+			//System.out.println("invoked at :"+ e.getX()+" "+e.getY());
+			if(e.getX()+50<400)
 			{
-				gamePanel.playerX = e.getX();
-				gamePanel.playerY = e.getY();
+					gamePanel.updatePos(e.getX(), e.getY(), 1);
 			}
 			else if(e.getX()>=400)
 			{
-				gamePanel.player2X = e.getX();
-				gamePanel.player2Y = e.getY();
+					gamePanel.updatePos(e.getX(), e.getY(), 2);
 			}
 		}
 		// System.out.println("mouse dragged");
@@ -51,16 +50,14 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
 		pressed = true;
 		if(dragged == true && pressed == true)
 		{
-			System.out.println("invoked at :"+ e.getX()+" "+e.getY());
+			//System.out.println("invoked at :"+ e.getX()+" "+e.getY());
 			if(e.getX()<400)
 			{
-				gamePanel.playerX = e.getX();
-				gamePanel.playerY = e.getY();
+					gamePanel.updatePos(e.getX(), e.getY(), 1);
 			}
 			else if(e.getX()>=400)
 			{
-				gamePanel.player2X = e.getX();
-				gamePanel.player2Y = e.getY();
+					gamePanel.updatePos(e.getX(), e.getY(), 2);
 			}
 		}
 	}
