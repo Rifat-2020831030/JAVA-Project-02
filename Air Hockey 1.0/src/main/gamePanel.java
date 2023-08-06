@@ -43,7 +43,6 @@ public class gamePanel extends JPanel implements Runnable{
 
     Thread gameThread;
 
-    KeyHandler key = new KeyHandler();
     MouseHandler mouse = new MouseHandler(this);
 
     //constractor
@@ -54,7 +53,6 @@ public class gamePanel extends JPanel implements Runnable{
         this.addMouseListener(mouse);
         this.addMouseMotionListener(mouse);
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); //set window size
-        this.addKeyListener(key);
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true); //enhance rendering
         this.setFocusable(true); 
