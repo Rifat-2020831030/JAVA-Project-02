@@ -1,3 +1,4 @@
+package main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -14,7 +15,11 @@ public class KeyHandler implements KeyListener{
        
         int code = e.getKeyCode();
 
-        if(code == KeyEvent.VK_W) upKey = true;
+        if(code == KeyEvent.VK_W)
+         {
+            upKey = true;
+            System.out.println("W is pressed"+ upKey);
+        }
         if(code == KeyEvent.VK_S) downKey = true;
         if(code == KeyEvent.VK_A) leftKey = true;
         if(code == KeyEvent.VK_D) rightKey = true;
