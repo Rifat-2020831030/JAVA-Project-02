@@ -3,11 +3,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.Buffer;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -22,8 +25,10 @@ public class gamePanel extends JPanel implements Runnable{
 
     // image variable
     private BufferedImage bg;
+    private Image bgtest;
     private BufferedImage ballImage;
     private BufferedImage paddle;
+    private Image pdl;
     private BufferedImage paddle2;
 
     //timing variable
@@ -39,11 +44,11 @@ public class gamePanel extends JPanel implements Runnable{
     private int speed = 10;
 
     //center of everything
-    public static int cPaddle = 51;
+    public static int cPaddle = 30;
+
 
     Thread gameThread;
 
-    KeyHandler key = new KeyHandler();
     MouseHandler mouse = new MouseHandler(this);
 
     //constractor
@@ -54,33 +59,26 @@ public class gamePanel extends JPanel implements Runnable{
         this.addMouseListener(mouse);
         this.addMouseMotionListener(mouse);
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); //set window size
-        this.addKeyListener(key);
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true); //enhance rendering
         this.setFocusable(true); 
         startGameThread();
     }
 
-    // public void setPlayerPos(int x, int y)
-    // {
-        
-    //      if(mouse.pressed == true && mouse.dragged==true)
-    //     {
-    //         playerX = x;
-    //         playerY = y;
-    //     }
-    // }
+
 
     public void importImg()
     {
-        InputStream is = getClass().getResourceAsStream("/bg1.png");
+        InputStream is = getClass().getResourceAsStream("/air hockey.png");
         InputStream ballIS = getClass().getResourceAsStream("/ball.png");
-        InputStream paddle1IS = getClass().getResourceAsStream("/paddle.png");
-        InputStream paddle2IS = getClass().getResourceAsStream("/paddle2.png");
+        InputStream paddle1IS = getClass().getResourceAsStream("/pdl.png");
+        InputStream paddle2IS = getClass().getResourceAsStream("/pdl.png");
         try {
             bg = ImageIO.read(is);
+            bgtest = bg.getScaledInstance(800, 500, Image.SCALE_DEFAULT);
             ballImage = ImageIO.read(ballIS);
             paddle = ImageIO.read(paddle1IS);
+            pdl = paddle.getScaledInstance(60 , 60, Image.SCALE_DEFAULT);
             paddle2 = ImageIO.read(paddle2IS);
         } catch (IOException e) {
             e.printStackTrace();                
@@ -141,7 +139,7 @@ public class gamePanel extends JPanel implements Runnable{
             
             if(timer>=1000000000)
             {
-                System.out.println("FPS :"+drawCount);
+                //System.out.println("FPS :"+drawCount);
                 drawCount=0; 
                 timer=0;
             }
@@ -152,8 +150,8 @@ public class gamePanel extends JPanel implements Runnable{
     {
  
         Collision.ballCollided();
-        ball.ballX += ball.ballvx;
-        ball.ballY += ball.ballvy;
+            ball.ballX += ball.ballvx;
+            ball.ballY += ball.ballvy;
 
     }
     public void paintComponent(Graphics g)
@@ -161,19 +159,13 @@ public class gamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
-        Graphics2D g3 = (Graphics2D) g;
 
-        g.drawImage(bg, 0, 60, null);
+        g2.drawImage(bgtest, 0, 60, null);
 
-        g.drawImage(ballImage, ball.ballX, ball.ballY, null);
-        g.drawImage(paddle, playerX, playerY, null);
-        g.drawImage(paddle2, player2X, player2Y, null);
-
-        // g2.setColor(Color.BLUE);
-        // g2.fillRect(playerX, playerY, 16, 16);
-       
-        // g3.setColor(Color.red);
-        // g3.fillRect(player2X, player2Y, 20, 20);
+        g2.drawImage(ballImage, ball.ballX, ball.ballY, null);
+        g2.drawImage(pdl, playerX, playerY, null);
+        g2.drawImage(pdl, player2X, player2Y, null);
+    
         g2.dispose();
     }
 }

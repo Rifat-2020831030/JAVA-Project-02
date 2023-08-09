@@ -23,11 +23,11 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
 		if(dragged == true && pressed == true)
 		{
 			//System.out.println("invoked at :"+ e.getX()+" "+e.getY());
-			if(e.getX()+50<400)
+			if(e.getX()+20<400)
 			{
 					gamePanel.updatePos(e.getX(), e.getY(), 1);
 			}
-			else if(e.getX()>=400)
+			else if(e.getX()-20>=400)
 			{
 					gamePanel.updatePos(e.getX(), e.getY(), 2);
 			}
@@ -51,11 +51,11 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
 		if(dragged == true && pressed == true)
 		{
 			//System.out.println("invoked at :"+ e.getX()+" "+e.getY());
-			if(e.getX()<400)
+			if(e.getX()+20<400)
 			{
 					gamePanel.updatePos(e.getX(), e.getY(), 1);
 			}
-			else if(e.getX()>=400)
+			else if(e.getX()-20>=400)
 			{
 					gamePanel.updatePos(e.getX(), e.getY(), 2);
 			}
