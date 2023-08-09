@@ -1,6 +1,8 @@
 package tool;
+
+import java.util.Random;
+
 public class ball {
-    
         //ball
         public static int ballX = 800/2 ;
         public static int ballY = 600/2 ;

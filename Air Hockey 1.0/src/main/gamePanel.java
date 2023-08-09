@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import input.MouseHandler;
+import tool.ScoreBoard;
 import tool.ball;
 
 public class gamePanel extends JPanel implements Runnable{
@@ -41,7 +42,6 @@ public class gamePanel extends JPanel implements Runnable{
     //player 2
     public static int player2X = 400;
     public static int player2Y = 400;
-    private int speed = 10;
 
     //center of everything
     public static int cPaddle = 30;
@@ -50,6 +50,7 @@ public class gamePanel extends JPanel implements Runnable{
     Thread gameThread;
 
     MouseHandler mouse = new MouseHandler(this);
+    ScoreBoard sc = new ScoreBoard(this);
 
     //constractor
     public gamePanel()
@@ -59,7 +60,7 @@ public class gamePanel extends JPanel implements Runnable{
         this.addMouseListener(mouse);
         this.addMouseMotionListener(mouse);
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); //set window size
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.WHITE);
         this.setDoubleBuffered(true); //enhance rendering
         this.setFocusable(true); 
         startGameThread();
@@ -152,6 +153,20 @@ public class gamePanel extends JPanel implements Runnable{
         Collision.ballCollided();
             ball.ballX += ball.ballvx;
             ball.ballY += ball.ballvy;
+        if(ball.ballY>=220 && ball.ballY<=380 && ball.ballX<=15)
+        {
+            sc.incrementPlayer2Score();
+            //repositioning center
+            ball.ballX = screenWidth/2;
+            ball.ballY = screenHeight/2;
+        }
+        else if(ball.ballY>=220 && ball.ballY<=380 && ball.ballX+(2*ball.radius)>=780)
+        {
+            sc.incrementPlayer1Score();
+              //repositioning center
+            ball.ballX = screenWidth/2;
+            ball.ballY = screenHeight/2;
+        }
 
     }
     public void paintComponent(Graphics g)
@@ -165,6 +180,8 @@ public class gamePanel extends JPanel implements Runnable{
         g2.drawImage(ballImage, ball.ballX, ball.ballY, null);
         g2.drawImage(pdl, playerX, playerY, null);
         g2.drawImage(pdl, player2X, player2Y, null);
+
+        sc.draw(g2);
     
         g2.dispose();
     }
